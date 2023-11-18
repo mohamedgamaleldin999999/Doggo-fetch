@@ -95,6 +95,17 @@
     // Given an array of possible answers, a correct answer value, and a number of choices to get,
     // return a list of that many choices, including the correct answer and others from the array
     function getMultipleChoices(n, correctAnswer, array) {
+      let arr = [];
+      arr.push(correctAnswer);
+      while (arr.length < n){
+        let choice = getRandomElement(array)
+        if(choice !== correctAnswer){
+          arr.push(choice)
+        }
+      }
+      shuffleArray(arr)
+      return arr
+
         // Use a while loop and the getRandomElement() function
         // Make sure there are no duplicates in the array
 
@@ -117,7 +128,6 @@
         }
     }
 
-    getBreedFromURL('https://images.dog.ceo/breeds/poodle-standard/n02113799_2280.jpg')
 
 
 
@@ -126,8 +136,13 @@
     // then parse the response as a JSON object,
     // finally return the "message" property of its body
     async function fetchMessage(url) {
-        
+      const response = await fetch(url);
+      const body = await response.json();
+      const {message} = body;
+      return message
     }
+
+    await fetchMessage('https://dog.ceo/api/breed/hound/list')
 
 
     // Function to add the multiple-choice buttons to the page
